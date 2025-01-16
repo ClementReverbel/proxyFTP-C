@@ -313,12 +313,12 @@ int main(){
                 //Lire tous les éléments du résultat de la commande ls
                 while (read(descSockTEMPserv, buffer, MAXBUFFERLEN - 1) != 0){
                     // lecture de donnees du serveur
-                    readProcess(ecode,descSockTEMPserv,buffer);
+                    /*readProcess(ecode,descSockTEMPserv,buffer);
                     if (ecode == -1)
                     {
                         perror("Probleme de lecture dans LS");
                         exit(1);
-                    }
+                    }*/
 
                     // envoie des donnees au client
                     writeProcess(ecode,descSockTEMPclient,buffer);
@@ -329,12 +329,14 @@ int main(){
                     }
                 };
 
+                message="226 Transfer complete.\n";
+                writeProcess(ecode,descSockCOM,message);
                 close(descSockTEMPclient);
                 close(descSockTEMPserv);
+                close(descSockCTRLserv);
+                close(descSockCOM);
             }
         }
-        close(descSockCTRLserv);
-        close(descSockCOM);
     }
     close(descSockRDV);
 }
